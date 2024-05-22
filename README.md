@@ -28,4 +28,4 @@ Navbar:icon and 6 line and Dashboard dropdowm menu
 8. Change password we can change password\
 
    
-   -------------------######Thanks for reading the doc----------------------
+   -------------------# Thanks for reading the doc----------------------
