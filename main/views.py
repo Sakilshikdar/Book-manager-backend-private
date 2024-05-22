@@ -104,7 +104,25 @@ class BookViewSet(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-    
+class BookListViewSet(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        customer = self.kwargs['pk']
+        qs = qs.filter(customer__id=customer)
+        return qs
+        
+class BookListViewSet(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        customer = self.kwargs['pk']
+        qs = qs.filter(customer__id=customer)
+        return qs
    
 
 class BookDetailsViewSet(generics.RetrieveUpdateDestroyAPIView):
@@ -125,29 +143,23 @@ class ReviewDetailsViewSet(generics.RetrieveUpdateDestroyAPIView):
 class ReviewViewSet(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+    
    
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
    
 
-class ReviewDetailViewSet(generics.ListAPIView):
-    # queryset = Review.objects.all()
-    serializer_class = ReviewDetailSerializer
-    
+class ReviewDetailViewSet(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
     def get_queryset(self):
-        review_id = self.kwargs['pk']
-        review = Review.objects.get(id=review_id)
-        review_items = Review.objects.filter(review=review)
-        return review_items
-
-
-
-
-   
-
-
-
+        qs = super().get_queryset()
+        book_id = self.kwargs['pk']
+        qs = qs.filter(book__id=book_id)
+        return qs
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     queryset = BookUser.objects.all()

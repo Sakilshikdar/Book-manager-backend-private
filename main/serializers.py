@@ -63,13 +63,14 @@ class BookDetailSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['id', 'customer',]
+        fields = ['id', 'customer','book', 'rating', 'comment', 'created_date']
+
 
 
 class ReviewDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['id', 'cutomer','book', 'rating', 'comment', 'created_date']
+        fields = ['id', 'customer','book', 'rating', 'comment', 'created_date']
 
     
         # def to_representation(self, instance):
