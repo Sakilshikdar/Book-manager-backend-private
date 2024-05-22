@@ -1,12 +1,10 @@
-
-from django.contrib import admin
-from django.urls import path, include
-from .import views
+from django.urls import path
+from . import views
 from rest_framework import routers
 
-route = routers.DefaultRouter()
-route.register('', views.BookViewSet)
-route.register('reviews', views.ReviewViewSet)
+router = routers.DefaultRouter()
+router.register('books', views.BookListandViewSet)
+router.register('rating', views.BookReviewListandViewSet)
 
 urlpatterns = [
     path('all_book/', views.BookViewSet.as_view(), name='book_list'),    
@@ -22,3 +20,5 @@ urlpatterns = [
     path('customer-change-password/<int:pk>/', views.CustomerChangePassword),
     
 ]
+
+urlpatterns += router.urls

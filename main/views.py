@@ -49,8 +49,6 @@ def customer_register(request):
     return JsonResponse(msg)
 
 
-# @csrf_exempt
-# def customer_register(request):
     first_name = request.POST.get('first_name')
     last_name = request.POST.get('last_name')
     email = request.POST.get('email')
@@ -146,6 +144,7 @@ class BookViewSet(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+
 class BookListViewSet(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -204,3 +203,12 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class BookListandViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+class BookReviewListandViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
