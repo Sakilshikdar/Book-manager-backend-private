@@ -6,10 +6,8 @@ Create Quiz:
 
 
 ### All user:
-#### First Register with poper information and   then login and go the home page 
-1.  the home page with 4-5 section.
-Navbar:icon and 6 line and Dashboard dropdowm menu
-
+#### First Register with poper information and then login and go the home page 
+1.  the home page with 3 section.
     . 1st section has a section 4 book show
 
     . 2nd section some webside review
@@ -23,6 +21,5 @@ Navbar:icon and 6 line and Dashboard dropdowm menu
 6. Dashboard all book route show all book and we edit and delete the book
 7. Add book add a book
 8. Change password we can change password\
-
    
-   -------------------### Thanks for reading the doc----------------------
+## ------------------- Thanks for reading the doc----------------------
