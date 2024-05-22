@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-nu6ek6)na@=9(78*(4zj9vv#!ag5_@$$1!uyj#l8@*1rgq4c(q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
@@ -88,15 +88,15 @@ WSGI_APPLICATION = 'book_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'book_manager',
-#         'USER': 'postgres',
-#         'PASSWORD': '12345',
-#         'HOST': 'localhost',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'book_manager',
+        'USER': 'postgres',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+    }
+}
 
 DATABASES = {
     'default': dj_database_url.config( 
@@ -157,4 +157,3 @@ REST_FRAMEWORK={
 
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
