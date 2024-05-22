@@ -87,16 +87,21 @@ WSGI_APPLICATION = 'book_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'book_manager',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'book_manager',
+#         'USER': 'postgres',
+#         'PASSWORD': '12345',
+#         'HOST': 'localhost',
+#     }
+# }
 
+DATABASES = {
+    'default': dj_database_url.config( 
+        default ='postgres://book_manager_user:kjvugHbbkfr9jau0L47eY8VOUJwtUX8w@dpg-cp6vmaev3ddc73frduo0-a.oregon-postgres.render.com/book_manager'
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
