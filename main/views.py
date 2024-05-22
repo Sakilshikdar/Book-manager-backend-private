@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
+from django.db.utils import IntegrityError
 
 
 @csrf_exempt
@@ -48,6 +49,45 @@ def customer_register(request):
     return JsonResponse(msg)
 
 
+# @csrf_exempt
+# def customer_register(request):
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
+    email = request.POST.get('email')
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    mobile = request.POST.get('mobile')
+
+    try:
+        # Create a new user
+        user = User.objects.create_user(
+            username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+        if user:
+            try:
+                customer = Customer.objects.create(user=user, phone=mobile)
+                msg = {
+                    'bool': True,
+                    'user': user.id,
+                    'customer': customer.id,
+                    'msg': 'You have successfully registered. You can now login.'
+                }
+            except IntegrityError:
+                msg = {
+                    'bool': False,
+                    'msg': 'Mobile already exists'
+                }
+        else:
+            msg = {
+                'bool': False,
+                'msg': 'Oops! Something went wrong. Please try again later.'
+            }
+    except IntegrityError:
+        msg = {
+            'bool': False,
+            'msg': 'Username already exists'
+        }
+    return JsonResponse(msg)
+
 
 @csrf_exempt
 def customer_login(request):
@@ -72,9 +112,9 @@ def customer_login(request):
 
 
 @csrf_exempt
-def CustomerChangePassword(request, customer_id):
+def CustomerChangePassword(request, pk):
     password = request.POST.get('password')
-    customer = Customer.objects.get(id=customer_id)
+    customer = Customer.objects.get(id=pk)
     user = customer.user
     user.password = make_password(password)
     user.save()
@@ -83,6 +123,8 @@ def CustomerChangePassword(request, customer_id):
         'msg': 'Password changed successfully'
     }
     return JsonResponse(msg)
+
+
 
 class CustomerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
@@ -113,20 +155,9 @@ class BookListViewSet(generics.ListCreateAPIView):
         customer = self.kwargs['pk']
         qs = qs.filter(customer__id=customer)
         return qs
-        
-class BookListViewSet(generics.ListCreateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        customer = self.kwargs['pk']
-        qs = qs.filter(customer__id=customer)
-        return qs
-   
 
 class BookDetailsViewSet(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = Book.objects.all()
     serializer_class = BookDetailSerializer
 
     def get_queryset(self):
@@ -135,9 +166,6 @@ class BookDetailsViewSet(generics.RetrieveUpdateDestroyAPIView):
 
 
 
-class ReviewDetailsViewSet(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
    
 
 class ReviewViewSet(generics.ListCreateAPIView):
@@ -160,6 +188,14 @@ class ReviewDetailViewSet(generics.ListCreateAPIView):
         book_id = self.kwargs['pk']
         qs = qs.filter(book__id=book_id)
         return qs
+
+
+class ReviewDetailsViewSet(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ReviewDetailSerializer
+
+    def get_queryset(self):
+        review_id = self.kwargs['pk']
+        return Review.objects.filter(id=review_id)
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     queryset = BookUser.objects.all()

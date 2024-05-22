@@ -73,12 +73,12 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
         fields = ['id', 'customer','book', 'rating', 'comment', 'created_date']
 
     
-        # def to_representation(self, instance):
-        #     response = super().to_representation(instance)
-        #     response['user'] = UserSerializer(instance.user).data
-        #     response['book'] = BookSerializer(instance.book).data
-        #     return response
+        def to_representation(self, instance):
+            response = super().to_representation(instance)
+            response['customer'] = CustomerSerializer(instance.customer).data
+            response['book'] = BookSerializer(instance.book).data
+            return response
 
-    def __init__(self, *args, **kwargs):
-            super(ReviewSerializer, self).__init__(*args, **kwargs)
-            self.Meta.depth = 1
+    # def __init__(self, *args, **kwargs):
+    #         super(ReviewSerializer, self).__init__(*args, **kwargs)
+    #         self.Meta.depth = 1
